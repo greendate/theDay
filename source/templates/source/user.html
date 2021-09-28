@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title> theDay </title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html, body, h1, h2, h3, h4, h5 {font-family: "Raleway", sans-serif}
+</style>
+</head>
+<body>
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+  <!-- The Grid -->
+  <div class="w3-row">
+    <!-- Left Column -->
+    <div class="w3-col w3-center w3-container m12 l12">
+      <!-- Profile -->
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+         <h4 class="w3-center">My Profile</h4>
+         <p class="w3-center"> <img src="{{ user_inst.picture_url }}" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         <hr>
+         <h5> {{user.first_name}} {{user.last_name}} </h5>
+         <p><i class="fa fa-telegram fa-fw w3-margin-right" style="color: #ff8080;"></i> {{ user_inst.telegram_alias }}</p>
+         <p><i class="fa fa-facebook fa-fw w3-margin-right" style="color: #ff8080;"></i> {{ user_inst.messenger_alias }}</p>
+         <p><i class="fa fa-envelope fa-fw w3-margin-right" style="color: #ff8080;"></i> {{ user.email }}</p>
+        </div>
+      </div>
+      <br>
+
+      <!-- Interests -->
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+          <p>Interests</p>
+          <p>
+            {{user_inst.interests_description}}
+          </p>
+        </div>
+      </div>
+      <br>
+
+    <!-- End Left Column -->
+    </div>
+
+</body>
+</html>
