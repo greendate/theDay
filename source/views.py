@@ -72,7 +72,7 @@ def edit(request):
              interests_description = UserInfo.objects.get(user=request.user).interests_description
              picture_url =  UserInfo.objects.get(user=request.user).picture_url
         form = UserEditForm(initial={'telegram_alias':telegram, 'messenger_alias': messenger, 'interests_description': interests_description, 'picture_url': picture_url})
-    return render(request, 'source/edit.html', {'form': form})
+    return render(request, 'source/edit.html', {'form': form, 'user': request.user})
 
 
 def accept(request, event_id):
@@ -80,12 +80,21 @@ def accept(request, event_id):
     acceptance.user = request.user
     acceptance.event = Event.objects.get(id=event_id)
     acceptance.save()
-    return redirect("/")
+    return redirect("/event/" + str(event_id))
 
 
 def event(request, event_id):
-    event = Event.objects.get(id=event_id)
-    return render(request, "source/event.html", {'event': event})
-
-def list(request, event_id):
-    return redirect("/")
+    in_list = Coming.objects.filter(event=Event.objects.get(id=event_id), user=request.user)
+    print(in_list)
+    if(not in_list):
+        event = Event.objects.get(id=event_id)
+        return render(request, "source/event.html", {'event': event})
+    else:
+        event = Event.objects.get(id=event_id)
+        users = list(Coming.objects.filter(event=event))
+        user_info_list = set()
+        for user in users:
+            print(user.user)
+            user_info_list.add(UserInfo.objects.get(user=user.user))
+        print(user_info_list)
+        return render(request, "source/user_list.html", {'event': event, 'users': user_info_list})

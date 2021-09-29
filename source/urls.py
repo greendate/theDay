@@ -10,5 +10,4 @@ urlpatterns = [
     path('new_event/', views.new_event, name='new_event'),
     path('event/<int:event_id>', views.event, name='event'),
     path('accept/<int:event_id>', views.accept, name='accept'),
-    path('list/<int:event_id>', views.list, name='list'),
 ]
