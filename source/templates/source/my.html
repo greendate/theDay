@@ -16,10 +16,9 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Raleway", sans-serif}
 <body>
   <div class="w3-top">
     <div class="w3-bar w3-pale-red w3-card w3-left-align w3-large">
-      <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-pale-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+      <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-pale-red" href="javascript:void(0);" onclick="myFunction0()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
       {% if user.is_authenticated %}
         <a href="/" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
-        <a href="/my" class="w3-bar-item w3-button w3-padding-large w3-white">Profile</a>
         <a href="/new_event" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">New Event</a>
         <a href="/edit" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Edit Profile</a>
         <a href="/logout" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Log Out</a>
@@ -33,7 +32,6 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Raleway", sans-serif}
     <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
       {% if user.is_authenticated %}
         <a href="/" class="w3-bar-item w3-button w3-padding-large">Home</a>
-        <a href="/my" class="w3-bar-item w3-button w3-padding-large">Profile</a>
         <a href="/new_event" class="w3-bar-item w3-button w3-padding-large">New Event</a>
         <a href="/edit" class="w3-bar-item w3-button w3-padding-large">Edit Profile</a>
         <a href="/logout" class="w3-bar-item w3-button w3-padding-large">Log Out</a>
@@ -75,19 +73,47 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Raleway", sans-serif}
       </div>
       <br>
 
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+          <p>My Events</p>
+          {% for event in events %}
+            <input type="text" value="https://theday.pythonanywhere.com/event/{{ event.id }}" id="myInput{{event.id}}">
+            <button onclick="myFunction{{ event.id }}()" class="w3-button w3-black">Copy Invitation Link</button>
+            <br>
+            <br>
+          {% endfor %}
+       </div>
+     </div>
     <!-- End Left Column -->
     </div>
+<script>
+  {% for event in events %}
+    function myFunction{{event.id}}() {
+    /* Get the text field */
+    var copyText = document.getElementById("myInput{{event.id}}");
 
-    <script>
-    // Used to toggle the menu on small screens when clicking on the menu button
-    function myFunction() {
-      var x = document.getElementById("navDemo");
-      if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-      } else {
-        x.className = x.className.replace(" w3-show", "");
-      }
-    }
-    </script>
+    /* Select the text field */
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+     /* Copy the text inside the text field */
+    navigator.clipboard.writeText(copyText.value);
+
+    /* Alert the copied text */
+    alert("Copied the text: " + copyText.value);
+  }
+{% endfor %}
+
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction0() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+
+</script>
 </body>
 </html>

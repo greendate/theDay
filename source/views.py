@@ -8,7 +8,9 @@ def index(request):
 
 
 def my(request):
-    return render(request, 'source/user.html', {'user': request.user})
+    events = Event.objects.filter(organizer=request.user)
+    user_inst = UserInfo.objects.get(user_id=request.user.id)
+    return render(request, 'source/my.html', {'user': request.user, 'user_inst': user_inst, 'events': events})
 
 
 def user(request, identity):
