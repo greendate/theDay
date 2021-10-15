@@ -23,3 +23,9 @@ class Event(models.Model):
 class Coming(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
+
+
+class Image(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    description = models.TextField()
+    picture = models.ImageField(upload_to='source/static/images/')

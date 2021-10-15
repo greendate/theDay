@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm, Textarea, TextInput, IntegerField, DateField, TimeField, ChoiceField, RadioSelect, NumberInput, DateInput, TimeInput, URLInput
-from .models import UserInfo, Event
+from .models import UserInfo, Event, Image
 import datetime
 
 class UserEditForm(forms.ModelForm):
@@ -30,4 +30,13 @@ class Create(forms.ModelForm):
             'where': TextInput(attrs={'id': 'where', 'placeholder': 'e.g Kazan City Hall'}),
             'our_story': Textarea(attrs={'id': 'story', 'placeholder': 'Our story..'}),
             'picture_url': URLInput(attrs={'id': 'user_image', 'placeholder': 'https://sample-cover.jpg'}),
+        }
+
+class ImageForm(forms.ModelForm):
+
+    class Meta:
+        model = Image
+        fields = ['picture', 'description']
+        widgets = {
+            'our_story': Textarea(attrs={'id': 'description', 'placeholder': 'Caption..'}),
         }

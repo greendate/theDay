@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import UserEditForm, Create
-from .models import UserInfo, Event, Coming
+from .forms import UserEditForm, Create, ImageForm
+from .models import UserInfo, Event, Coming, Image
 from django.contrib.auth.models import User
 
 def index(request):
@@ -66,8 +66,8 @@ def edit(request):
         # in order to have values from database in forms
         query = UserInfo.objects.filter(user=request.user)
         if not query:
-            telegram = "@.."
-            messenger = "@.."
+            telegram = ".."
+            messenger = ".."
         else:
              telegram = UserInfo.objects.get(user=request.user).telegram_alias
              messenger = UserInfo.objects.get(user=request.user).messenger_alias
@@ -87,6 +87,7 @@ def accept(request, event_id):
 
 def event(request, event_id):
     in_list = Coming.objects.filter(event=Event.objects.get(id=event_id), user=request.user)
+    image_list = Image.objects.filter(event=Event.objects.get(id=event_id))
     print(in_list)
     if(not in_list):
         event = Event.objects.get(id=event_id)
@@ -99,4 +100,29 @@ def event(request, event_id):
             print(user.user)
             user_info_list.add(UserInfo.objects.get(user=user.user))
         print(user_info_list)
-        return render(request, "source/user_list.html", {'event': event, 'users': user_info_list})
+
+        # get rid of the absolute path
+        for i in (0, len(image_list) - 1):
+            temp = str(image_list[i].picture)
+            image_list[i].picture = temp[temp.find('/') + 1: len(temp)]
+
+        return render(request, "source/user_list.html", {'event': event, 'users': user_info_list, 'images': image_list})
+
+
+def upload_to_gallery(request, event_id):
+
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        image_model = Image()
+
+        if form.is_valid():
+            # form.save()
+            image_model.event = Event.objects.get(id=event_id)
+            image_model.picture = form.cleaned_data["picture"]
+            image_model.description = form.cleaned_data["description"]
+            image_model.save()
+            return redirect('/')
+    else:
+        form = ImageForm()
+        form.data['event'] = Event.objects.get(id=event_id)
+    return render(request, 'source/upload.html', {'form' : form})

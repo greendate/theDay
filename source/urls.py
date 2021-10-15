@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -10,4 +12,9 @@ urlpatterns = [
     path('new_event/', views.new_event, name='new_event'),
     path('event/<int:event_id>', views.event, name='event'),
     path('accept/<int:event_id>', views.accept, name='accept'),
+    path('upload/<int:event_id>', views.upload_to_gallery, name = 'image_upload'),
 ]
+
+if settings.DEBUG:
+        urlpatterns += static(settings.MEDIA_URL,
+                              document_root=settings.MEDIA_ROOT)

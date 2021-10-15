@@ -1,16 +1,23 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title> theDay </title>
+  <title>theDay</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
-  html, body, h1, h2, h3, h4, h5 {font-family: "Raleway", sans-serif}
+  body,h1,h2{font-family: "Raleway", sans-serif}
+  body, html {height: 100%}
+  p {line-height: 2}
+  .bgimg, .bgimg2 {
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+  }
   </style>
   <script type='text/javascript'>
     window.smartlook||(function(d) {
@@ -22,13 +29,13 @@
   </script>
 </head>
 <body>
+
   <div class="w3-top">
     <div class="w3-bar w3-pale-red w3-card w3-left-align w3-large">
       <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-pale-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
       {% if user.is_authenticated %}
         <a href="/" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
-        <a href="/my" class="w3-bar-item w3-button w3-padding-large w3-white">Profile</a>
-        <a href="/new_event" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">New Event</a>
+        <a href="/my" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Profile</a>
         <a href="/edit" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Edit Profile</a>
         <a href="/logout" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Log Out</a>
       {% else %}
@@ -42,7 +49,6 @@
       {% if user.is_authenticated %}
         <a href="/" class="w3-bar-item w3-button w3-padding-large">Home</a>
         <a href="/my" class="w3-bar-item w3-button w3-padding-large">Profile</a>
-        <a href="/new_event" class="w3-bar-item w3-button w3-padding-large">New Event</a>
         <a href="/edit" class="w3-bar-item w3-button w3-padding-large">Edit Profile</a>
         <a href="/logout" class="w3-bar-item w3-button w3-padding-large">Log Out</a>
       {% else %}
@@ -50,52 +56,39 @@
         <a href="/register" class="w3-bar-item w3-button w3-padding-large">Register</a>
       {% endif %}
     </div>
-
   </div>
 
-<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
-  <!-- The Grid -->
-  <div class="w3-row">
-    <!-- Left Column -->
-    <div class="w3-col w3-center w3-container m12 l12">
-      <!-- Profile -->
-      <div class="w3-card w3-round w3-white">
-        <div class="w3-container">
-         <h4 class="w3-center">My Profile</h4>
-         <p class="w3-center"> <img src="{{ user_inst.picture_url }}" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
-         <hr>
-         <h5> {{user.first_name}} {{user.last_name}} </h5>
-         <p><a href = "https://www.facebook.com/{{ user_inst.messenger_alias }}"><i class="fa fa-facebook fa-fw w3-margin-right" style="color: #ff8080;"></i> {{ user_inst.messenger_alias }} </a></p>
-         <p><a href = "https://t.me/{{ user_inst.telegram_alias }}"><i class="fa fa-telegram fa-fw w3-margin-right" style="color: #ff8080;"></i> {{ user_inst.telegram_alias }} </a></p>
-         <p><i class="fa fa-envelope fa-fw w3-margin-right" style="color: #ff8080;"></i> {{ user.email }}</p>
-        </div>
-      </div>
-      <br>
-
-      <!-- Interests -->
-      <div class="w3-card w3-round w3-white">
-        <div class="w3-container">
-          <p>Interests</p>
-          <p>
-            {{user_inst.interests_description}}
-          </p>
-        </div>
-      </div>
-      <br>
-
-    <!-- End Left Column -->
+  <div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
+    <div class="w3-row-padding w3-padding-16 w3-center">
+      {% if user.is_authenticated %}
+        <form method = "post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.picture }}
+            <br>
+            <br>
+            {{ form.description }}
+            <br>
+            <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top" type="submit">Upload</button>
+        </form>
+        {% endif %}
     </div>
+  </div>
 
-    <script>
-    // Used to toggle the menu on small screens when clicking on the menu button
-    function myFunction() {
-      var x = document.getElementById("navDemo");
-      if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-      } else {
-        x.className = x.className.replace(" w3-show", "");
-      }
+  <footer class="w3-container w3-padding-64 w3-center w3-opacity">
+   <p>Powered by theDay Team</a></p>
+  </footer>
+
+  <script>
+  // Used to toggle the menu on small screens when clicking on the menu button
+  function myFunction() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+      x.className += " w3-show";
+    } else {
+      x.className = x.className.replace(" w3-show", "");
     }
-    </script>
-</body>
+  }
+  </script>
+
+  </body>
 </html>

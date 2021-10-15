@@ -33,7 +33,8 @@
   </script>
 </head>
 <body>
-
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/sr_RS/sdk.js#xfbml=1&version=v12.0" nonce="btuUajZY"></script>
 <!-- Header / Home-->
 <header class="w3-display-container w3-wide bgimg w3-grayscale-min" id="home">
   <div class="w3-display-middle w3-text-white w3-center">
@@ -46,10 +47,11 @@
 <!-- Navbar (sticky bottom) -->
 <div class="w3-bottom w3-hide-small">
   <div class="w3-bar w3-white w3-center w3-padding w3-opacity-min w3-hover-opacity-off">
-    <a href="/" style="width:25%" class="w3-bar-item w3-button">Home</a>
-    <a href="#us" style="width:25%" class="w3-bar-item w3-button">{{event.names}}</a>
-    <a href="#wedding" style="width:25%" class="w3-bar-item w3-button">Wedding</a>
-    <a href="#list" style="width:25%" class="w3-bar-item w3-button w3-hover-black">Guests List</a>
+    <a href="/" style="width:20%" class="w3-bar-item w3-button">Home</a>
+    <a href="#us" style="width:20%" class="w3-bar-item w3-button">{{event.names}}</a>
+    <a href="#wedding" style="width:20%" class="w3-bar-item w3-button">Wedding</a>
+    <a href="#list" style="width:20%" class="w3-bar-item w3-button w3-hover-black">Guests List</a>
+    <a href="#gallery" style="width:20%" class="w3-bar-item w3-button w3-hover-black">Gallery</a>
   </div>
 </div><!-- Navbar (sticky bottom)
  <div class="w3-top">
@@ -105,11 +107,44 @@
   {% endfor %}
 </div>
 
+<div class="w3-container w3-padding-64 w3-center" id="gallery">
+  <h2>Gallery</h2>
+  {% for image in images %}
+    <div class="w3-half 3-container w3-margin-bottom" style="margin-left: 25%;">
+        <img src="/static/{{image.picture}}" alt="Image" style="width:100%" class="w3-hover-opacity" onclick="onClick(this)">
+        <div class="w3-container w3-pale-red">
+          <p>
+            <div class="fb-share-button" data-href="/static/{{image.picture}}" data-layout="button" data-size="large">
+              <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a>
+            </div>
+          </p>
+          <p>{{image.description}}</p>
+        </div>
+    </div>
+  {% endfor %}
+  <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
+    <span class="w3-button w3-black w3-xlarge w3-display-topright">×</span>
+    <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+      <img id="img01" class="w3-image">
+      <p id="caption"></p>
+    </div>
+  </div>
+  <h1 align="right"><a class="fa fa-plus-circle fa-fw w3-margin-right" style="color: #ff8080;" href="/upload/{{event.id}}"></a> </h1>
+</div>
+
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-16">
   <p>Powered by theDay Team</a></p>
 </footer>
 <div class="w3-hide-small" style="margin-bottom:32px"> </div>
-
+<script>
+// Modal Image Gallery
+  function onClick(element) {
+    document.getElementById("img01").src = element.src;
+    document.getElementById("modal01").style.display = "block";
+    var captionText = document.getElementById("caption");
+    captionText.innerHTML = element.alt;
+  }
+</script>
 </body>
 </html>
