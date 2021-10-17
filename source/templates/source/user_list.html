@@ -109,9 +109,12 @@
 
 <div class="w3-container w3-padding-64 w3-center" id="gallery">
   <h2>Gallery</h2>
+  <h1 align="right"><a class="fa fa-plus-circle fa-fw w3-margin-right" style="color: #ff8080;" href="/upload/{{event.id}}"></a> </h1>
   {% for image in images %}
-    <div class="w3-half 3-container w3-margin-bottom w3-center">
-        <img src="{{image.picture.url}}" alt="Image" style="width:100%" class="w3-hover-opacity" onclick="onClick(this)">
+    <div class="w3-third 3-container w3-margin-bottom w3-center">
+    </div>
+    <div class="w3-third 3-container w3-margin-bottom w3-center w3-margin-left">
+        <img src="{{image.picture.url}}" alt="Image" style="width:100%;" class="w3-hover-opacity" onclick="onClick(this)">
         <div class="w3-container w3-pale-red">
           <p>
             <div class="fb-share-button" data-href="{{image.picture.url}}" data-layout="button" data-size="large">
@@ -129,7 +132,6 @@
       <p id="caption"></p>
     </div>
   </div>
-  <h1 align="right"><a class="fa fa-plus-circle fa-fw w3-margin-right" style="color: #ff8080;" href="/upload/{{event.id}}"></a> </h1>
 </div>
 
 <!-- Footer -->
