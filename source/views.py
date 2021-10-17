@@ -101,11 +101,6 @@ def event(request, event_id):
             user_info_list.add(UserInfo.objects.get(user=user.user))
         print(user_info_list)
 
-        # get rid of the absolute path
-        for i in (0, len(image_list) - 1):
-            temp = str(image_list[i].picture)
-            image_list[i].picture = temp[temp.find('/') + 1: len(temp)]
-
         return render(request, "source/user_list.html", {'event': event, 'users': user_info_list, 'images': image_list})
 
 

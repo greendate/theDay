@@ -28,4 +28,4 @@ class Coming(models.Model):
 class Image(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     description = models.TextField()
-    picture = models.ImageField(upload_to='source/static/images/')
+    picture = models.ImageField(upload_to='./source/static/images/')
