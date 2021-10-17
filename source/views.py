@@ -116,7 +116,7 @@ def upload_to_gallery(request, event_id):
             image_model.picture = form.cleaned_data["picture"]
             image_model.description = form.cleaned_data["description"]
             image_model.save()
-            return redirect('/')
+            return redirect('/event/' + str(event_id))
     else:
         form = ImageForm()
         form.data['event'] = Event.objects.get(id=event_id)
