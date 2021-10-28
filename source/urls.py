@@ -13,6 +13,9 @@ urlpatterns = [
     path('event/<int:event_id>', views.event, name='event'),
     path('accept/<int:event_id>', views.accept, name='accept'),
     path('upload/<int:event_id>', views.upload_to_gallery, name = 'image_upload'),
+    path('posts/<int:event_id>', views.posts, name = 'posts'),
+    path('like/<int:event_id>/<int:status_id>', views.like, name = 'like'),
+    path('comment/<int:event_id>/<int:status_id>', views.comment, name = 'comment'),
 ]
 
 if settings.DEBUG:

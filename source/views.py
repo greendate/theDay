@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect
-from .forms import UserEditForm, Create, ImageForm
-from .models import UserInfo, Event, Coming, Image
+from .forms import UserEditForm, Create, ImageForm, StatusForm, CommentForm
+from .models import UserInfo, Event, Coming, Image, Status, Like, Comment
 from django.contrib.auth.models import User
 
 def index(request):
+    # create initial user info to avoid query errors
+    if len(UserInfo.objects.filter(user=request.user)) == 0:
+        user_inst = UserInfo()
+        user_inst.user = request.user
+        user_inst.save()
     return render(request, 'source/index.html')
 
 
@@ -32,7 +37,6 @@ def new_event(request):
         event_inst.where = form.data["where"]
         event_inst.picture_url = form.data["picture_url"]
         event_inst.organizer = request.user
-
         event_inst.save()
         return redirect("/")
     form = Create()
@@ -75,6 +79,24 @@ def edit(request):
              picture_url =  UserInfo.objects.get(user=request.user).picture_url
         form = UserEditForm(initial={'telegram_alias':telegram, 'messenger_alias': messenger, 'interests_description': interests_description, 'picture_url': picture_url})
     return render(request, 'source/edit.html', {'form': form, 'user': request.user})
+
+
+def posts(request, event_id):
+    if request.method == 'POST':
+        status_form = StatusForm(request.POST)
+        status_model = Status()
+        status_model.status_text = status_form.data["status_text"]
+        status_model.event = Event.objects.get(id=event_id)
+        status_model.save()
+        return redirect('/posts/' + str(event_id))
+    form = StatusForm()
+    event =  Event.objects.get(id=event_id)
+    status_list = Status.objects.filter(event=event.id)
+    organizer = UserInfo.objects.get(user=event.organizer)
+    for status in status_list:
+        status.likes = len(Like.objects.filter(status=status))
+        status.comments = len(Comment.objects.filter(status=status))
+    return render(request, 'source/posts.html', {'form': form, 'event': event, 'posts': status_list, 'organizer': organizer})
 
 
 def accept(request, event_id):
@@ -121,3 +143,32 @@ def upload_to_gallery(request, event_id):
         form = ImageForm()
         form.data['event'] = Event.objects.get(id=event_id)
     return render(request, 'source/upload.html', {'form' : form})
+
+
+def like(request, event_id, status_id):
+    list = Like.objects.filter(status=status_id, user=request.user)
+    if len(list) == 0:
+        like_model = Like()
+        like_model.status = Status.objects.get(id=status_id)
+        like_model.user = request.user
+        like_model.save()
+    return redirect('/posts/' + str(event_id))
+
+
+def comment(request, event_id, status_id):
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        comment_model = Comment()
+        comment_model.status = Status.objects.get(id=status_id)
+        comment_model.user = UserInfo.objects.get(user=request.user)
+        comment_model.comment = form.data["comment"]
+        comment_model.save()
+        return redirect('/comment/' + str(event_id) + "/" + str(status_id))
+    form = CommentForm()
+    event =  Event.objects.get(id=event_id)
+    status = Status.objects.get(id=status_id)
+    organizer = UserInfo.objects.get(user=event.organizer)
+    comments = Comment.objects.filter(status=status)
+    status.likes = len(Like.objects.filter(status=status))
+    status.comments = len(Comment.objects.filter(status=status))
+    return render(request, 'source/status.html', {'form' : form, 'post': status, 'organizer': organizer, 'comments': comments})
