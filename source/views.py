@@ -5,10 +5,11 @@ from django.contrib.auth.models import User
 
 def index(request):
     # create initial user info to avoid query errors
-    if len(UserInfo.objects.filter(user=request.user)) == 0:
-        user_inst = UserInfo()
-        user_inst.user = request.user
-        user_inst.save()
+    if request.user.is_authenticated:
+        if len(UserInfo.objects.filter(user=request.user)) == 0:
+            user_inst = UserInfo()
+            user_inst.user = request.user
+            user_inst.save()
     return render(request, 'source/index.html')
 
 
