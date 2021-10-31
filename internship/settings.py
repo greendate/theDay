@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'source.apps.SourceConfig',
     'register.apps.RegisterConfig',
     'crispy_forms',
+    'amplitude',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'amplitude.middleware.SessionInfo',
+    'amplitude.middleware.SendPageViewEvent',
 ]
 
 ROOT_URLCONF = 'internship.urls'
@@ -126,3 +129,9 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 MEDIA_URL = '/media/'
+# Settings > Projects > <Your project> > General > API Key
+AMPLITUDE_API_KEY = '94a703a3ebc592afb40042df1e7e82a0'
+
+# You can also choose if you want to include user and group data (Default False)
+AMPLITUDE_INCLUDE_USER_DATA = False
+AMPLITUDE_INCLUDE_GROUP_DATA = False
