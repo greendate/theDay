@@ -4,3 +4,4 @@ django-crispy-forms>=1.9.0
 pillow
 django-amplitude
 packaging
+mixpanel
