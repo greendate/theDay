@@ -109,6 +109,8 @@ def accept(request, event_id):
 
 
 def event(request, event_id):
+    if not request.user.is_authenticated:
+        return render(request, "source/nonregistered.html")
     in_list = Coming.objects.filter(event=Event.objects.get(id=event_id), user=request.user)
     image_list = Image.objects.filter(event=Event.objects.get(id=event_id))
     print(in_list)
@@ -124,7 +126,12 @@ def event(request, event_id):
             user_info_list.add(UserInfo.objects.get(user=user.user))
         print(user_info_list)
 
-        return render(request, "source/user_list.html", {'event': event, 'users': user_info_list, 'images': image_list})
+        post_heading = ""
+
+        if request.user.id % 2 == 1:
+            post_heading = "Posts"
+
+        return render(request, "source/user_list.html", {'event': event, 'users': user_info_list, 'images': image_list, 'post_heading': post_heading})
 
 
 def upload_to_gallery(request, event_id):

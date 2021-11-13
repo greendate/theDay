@@ -21,7 +21,7 @@
     background-position: center;
     background-size: cover;
   }
-  .bgimg {background-image: url("{% static 'img/wedding_couple.jpg'%}")}
+  .bgimg {background-image: url("{% static 'img/meeting.jpg'%}"); opacity: 50%}
   .bgimg2 {background-image: url("{% static 'img/flowers.jpg'%}")}
   </style>
   <script type='text/javascript'>
@@ -39,9 +39,9 @@
 <!-- Header / Home-->
 <header class="w3-display-container w3-wide bgimg w3-grayscale-min" id="home">
   <div class="w3-display-middle w3-text-white w3-center">
-    <h1 class="w3-jumbo">{{event.names}}</h1>
-    <h2>Are getting married</h2>
-    <h2><b>{{ event.date }}</b></h2>
+    <h1 class="w3-jumbo" style="background-color: black;">{{event.names}}</h1>
+    <h2 style="background-color: black;">Is organized</h2>
+    <h3 style="background-color: black;"><b>{{ event.date }}</b></h3>
   </div>
 </header>
 
@@ -50,14 +50,14 @@
   <div class="w3-bar w3-white w3-center w3-padding w3-opacity-min w3-hover-opacity-off">
     <a href="/" style="width:20%" class="w3-bar-item w3-button">Home</a>
     <a href="#us" style="width:20%" class="w3-bar-item w3-button">{{event.names}}</a>
-    <a href="#wedding" style="width:20%" class="w3-bar-item w3-button">Wedding</a>
+    <a href="#event" style="width:20%" class="w3-bar-item w3-button">Event</a>
     <a href="#list" style="width:20%" class="w3-bar-item w3-button w3-hover-black">Guests List</a>
     <a href="#gallery" style="width:20%" class="w3-bar-item w3-button w3-hover-black">Gallery</a>
   </div>
 </div><!-- Navbar (sticky bottom)
  <div class="w3-top">
-  <div class="w3-bar w3-pale-red w3-card w3-left-align w3-large">
-    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-pale-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+  <div class="w3-bar w3-pale-blue w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-pale-blue" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
     {% if user.is_authenticated %}
       <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Profile</a>
     {% else %}
@@ -67,28 +67,28 @@
   </div>
 -->
 <!-- About / Jane And John -->
-<div class="w3-container w3-padding-64 w3-pale-red w3-grayscale-min" id="us">
+<div class="w3-container w3-padding-64 w3-pale-blue w3-grayscale-min" id="us">
   <div class="w3-content">
     <h1 class="w3-center w3-text-grey"><b>{{ event.names }}</b></h1>
     <img class="w3-round w3-grayscale-min" src="{{event.picture_url}}" style="width:100%;margin:32px 0">
     <p><i>{{event.our_story}}</i>
     </p><br>
     <div class ="w3-center">
-      <h2> Posts </h2>
+      <h2> {{ post_heading }} </h2>
       <a href="/posts/{{event.id}}" class="w3-button w3-black w3-padding-large w3-large w3-margin-top"> Keep up to date with the latest news! Check out our posts! </a>
     </div>
   </div>
 </div>
 
 <!-- Wedding information -->
-<div class="w3-container w3-padding-64 w3-pale-red w3-grayscale-min w3-center" id="wedding">
+<div class="w3-container w3-padding-64 w3-pale-blue w3-grayscale-min w3-center" id="event">
   <div class="w3-content">
-    <h1 class="w3-text-grey"><b>THE WEDDING</b></h1>
-    <img class="w3-round-large w3-grayscale-min" src="{% static 'img/wedding_location.jpg'%}" style="width:100%;margin:64px 0">
+    <h1 class="w3-text-grey"><b>EVENT</b></h1>
+    <img class="w3-round-large w3-grayscale-min" src="{% static 'img/event-location.jpg'%}" style="width:100%;margin:64px 0">
     <div class="w3-row">
       <div class="w3-half">
         <h2>When</h2>
-        <p>Wedding Ceremony - {{ event.when }}</p>
+        <p>Event - {{ event.when }}</p>
       </div>
       <div class="w3-half">
         <h2>Where</h2>
@@ -99,7 +99,7 @@
 </div>
 
 <!-- RSVP section -->
-<div class="w3-container w3-padding-64 w3-pale-red w3-center" id="list">
+<div class="w3-container w3-padding-64 w3-pale-blue w3-center" id="list">
   <h2>Guests List</h2>
   {% for user in users %}
   <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
@@ -107,7 +107,7 @@
       <h4>{{ user.user.first_name }} {{ user.user.last_name }}</h4><br>
       <hr class="w3-clear">
       <p> {{user.interests_description}} </p>
-      <a type="button" class="w3-button w3-pale-red w3-margin-bottom" href="/user/{{user.user_id}}"><i class="fa fa-user"></i>  View Profile </a>
+      <a type="button" class="w3-button w3-pale-blue w3-margin-bottom" href="/user/{{user.user_id}}"><i class="fa fa-user"></i>  View Profile </a>
   </div>
   {% endfor %}
 </div>
@@ -120,7 +120,7 @@
     </div>
     <div class="w3-third 3-container w3-margin-bottom w3-center w3-margin-left">
         <img src="{{image.picture.url}}" alt="Image" style="width:100%;" class="w3-hover-opacity" onclick="onClick(this)">
-        <div class="w3-container w3-pale-red">
+        <div class="w3-container w3-pale-blue">
           <p>
             <div class="fb-share-button" data-href="{{image.picture.url}}" data-layout="button" data-size="large">
               <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a>
