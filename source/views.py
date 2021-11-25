@@ -28,7 +28,7 @@ def user(request, identity):
 def new_event(request):
     if request.method == 'POST':
         event_inst = Event()
-        form = Create(request.POST)
+        form = Create(request.POST, request.FILES)
 
         event_inst.names = form.data["names"]
         print(request.POST.get('date'))
@@ -36,10 +36,10 @@ def new_event(request):
         event_inst.our_story = form.data["our_story"]
         event_inst.when = form.data["when"]
         event_inst.where = form.data["where"]
-        event_inst.picture_url = form.data["picture_url"]
+        event_inst.picture_url = request.FILES.get("picture_url")
         event_inst.organizer = request.user
         event_inst.save()
-        return redirect("/")
+        return redirect("/my")
     form = Create()
     return render(request, 'source/new_event.html', {'form': form})
 
@@ -47,13 +47,16 @@ def new_event(request):
 def edit(request):
     if request.method == 'POST':
         user_inst = UserInfo()
-        form = UserEditForm(request.POST)
+        form = UserEditForm(request.POST, request.FILES)
 
         user_inst.user = request.user
         user_inst.telegram_alias = form.data["telegram_alias"]
         user_inst.messenger_alias = form.data["messenger_alias"]
         user_inst.interests_description = form.data["interests_description"]
-        user_inst.picture_url = form.data["picture_url"]
+        if request.FILES.get("picture_url") != None:
+             user_inst.picture_url = request.FILES.get("picture_url")
+        else:
+             picture_url =  UserInfo.objects.get(user=request.user).picture_url
 
         query = UserInfo.objects.filter(user=request.user)
 
@@ -62,12 +65,12 @@ def edit(request):
         else:
             user_inst.save(update_fields=["telegram_alias", "messenger_alias", "interests_description", "picture_url"])
 
-        return redirect("/")
+        return redirect("/my")
     else:
         telegram = ""
         messenger = ""
         interests_description = ""
-        picture_url = "https://sample-cover.jpg"
+        picture_url = "source/static/img/default-profile-icon-16.png"
         # in order to have values from database in forms
         query = UserInfo.objects.filter(user=request.user)
         if not query:
@@ -79,7 +82,8 @@ def edit(request):
              interests_description = UserInfo.objects.get(user=request.user).interests_description
              picture_url =  UserInfo.objects.get(user=request.user).picture_url
         form = UserEditForm(initial={'telegram_alias':telegram, 'messenger_alias': messenger, 'interests_description': interests_description, 'picture_url': picture_url})
-    return render(request, 'source/edit.html', {'form': form, 'user': request.user})
+    user_info = UserInfo.objects.get(user=request.user)
+    return render(request, 'source/edit.html', {'form': form, 'user': request.user, 'user_info': user_info})
 
 
 def posts(request, event_id):
@@ -110,13 +114,15 @@ def accept(request, event_id):
 
 def event(request, event_id):
     if not request.user.is_authenticated:
-        return render(request, "source/nonregistered.html")
+        event = Event.objects.get(id=event_id)
+        return render(request, "source/nonregistered.html", {'event': event})
     in_list = Coming.objects.filter(event=Event.objects.get(id=event_id), user=request.user)
     image_list = Image.objects.filter(event=Event.objects.get(id=event_id))
     print(in_list)
     if(not in_list):
         event = Event.objects.get(id=event_id)
-        return render(request, "source/event.html", {'event': event})
+        ab_test = request.user.id % 2
+        return render(request, "source/event.html", {'event': event, 'ab_test': ab_test})
     else:
         event = Event.objects.get(id=event_id)
         users = list(Coming.objects.filter(event=event))
@@ -125,13 +131,7 @@ def event(request, event_id):
             print(user.user)
             user_info_list.add(UserInfo.objects.get(user=user.user))
         print(user_info_list)
-
-        post_heading = ""
-
-        if request.user.id % 2 == 1:
-            post_heading = "Posts"
-
-        return render(request, "source/user_list.html", {'event': event, 'users': user_info_list, 'images': image_list, 'post_heading': post_heading})
+        return render(request, "source/user_list.html", {'event': event, 'users': user_info_list, 'images': image_list})
 
 
 def upload_to_gallery(request, event_id):

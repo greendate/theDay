@@ -70,11 +70,11 @@
 <div class="w3-container w3-padding-64 w3-pale-blue w3-grayscale-min" id="us">
   <div class="w3-content">
     <h1 class="w3-center w3-text-grey"><b>{{ event.names }}</b></h1>
-    <img class="w3-round w3-grayscale-min" src="{{event.picture_url}}" style="width:100%;margin:32px 0">
+    <img class="w3-round w3-grayscale-min" src="{{event.picture_url.url}}" style="width:100%;margin:32px 0">
     <p><i>{{event.our_story}}</i>
     </p><br>
     <div class ="w3-center">
-      <h2> {{ post_heading }} </h2>
+      <h2> Posts </h2>
       <a href="/posts/{{event.id}}" class="w3-button w3-black w3-padding-large w3-large w3-margin-top"> Keep up to date with the latest news! Check out our posts! </a>
     </div>
   </div>
@@ -103,7 +103,7 @@
   <h2>Guests List</h2>
   {% for user in users %}
   <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-      <img  src="{{user.picture_url}}" alt="Avatar" class="w3-center w3-circle" style="width:60px; height:60px;">
+      <img  src="{{user.picture_url.url}}" alt="Avatar" class="w3-center w3-circle" style="width:60px; height:60px;">
       <h4>{{ user.user.first_name }} {{ user.user.last_name }}</h4><br>
       <hr class="w3-clear">
       <p> {{user.interests_description}} </p>

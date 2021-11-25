@@ -1,15 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <title>theDay</title>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="{% static 'img/logo.png'%}" type="image/png"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
   <style>
   body,h1,h2{font-family: "Raleway", sans-serif}
   body, html {height: 100%}
@@ -19,16 +17,8 @@
     background-position: center;
     background-size: cover;
   }
-  textarea{
-    width: 100%;
-    height: 50px;
-  }
-
-  img {
-    height: 60px;
-    width: 60px;
-  }
-
+  .bgimg {background-image: url("{% static 'img/meeting.jpg'%}"); opacity: 50%;}
+  .bgimg2 {background-image: url("{% static 'img/Cover.png'%}")}
   </style>
   <script type='text/javascript'>
     window.smartlook||(function(d) {
@@ -46,66 +36,100 @@
     // Enabling the debug mode flag is useful during implementation,
     // but it's recommended you remove it for production
     mixpanel.init('6702bda0e171cb53fdebc0c9fa29e5f7', {debug: true});
-    mixpanel.track('Checking Events Posts');
+    mixpanel.track('New Guest Arrival');
   </script>
 </head>
 <body>
 
-  <div class="w3-display-container">
-    <div class="w3-bar w3-pale-red w3-card w3-left-align w3-large">
-      <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-pale-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-      {% if user.is_authenticated %}
-        <a href="/" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
-        <a href="/my" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Profile</a>
-        <a href="/edit" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Edit Profile</a>
-        <a href="/logout" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Log Out</a>
-      {% else %}
-        <a href="/login" class="w3-bar-item w3-button w3-padding-large w3-white">Login</a>
-        <a href="/register" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Register</a>
-      {% endif %}
-    </div>
+<!-- Header / Home-->
+<header class="w3-display-container w3-wide bgimg w3-grayscale-min" id="home">
+  <div class="w3-display-middle w3-text-white w3-center">
+    <h1 class="w3-jumbo" style="background-color: black;">{{event.names}}</h1>
+    <h2 style="background-color: black;">Is organized</h2>
+    <h3 style="background-color: black;"><b>{{ event.date }}</b></h3>
+  </div>
+</header>
 
-    <!-- Navbar on small screens -->
-    <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
-      {% if user.is_authenticated %}
-        <a href="/" class="w3-bar-item w3-button w3-padding-large">Home</a>
-        <a href="/my" class="w3-bar-item w3-button w3-padding-large">Profile</a>
-        <a href="/edit" class="w3-bar-item w3-button w3-padding-large">Edit Profile</a>
-        <a href="/logout" class="w3-bar-item w3-button w3-padding-large">Log Out</a>
-      {% else %}
-        <a href="/login" class="w3-bar-item w3-button w3-padding-large">Login</a>
-        <a href="/register" class="w3-bar-item w3-button w3-padding-large">Register</a>
-      {% endif %}
+<!-- Navbar (sticky bottom) -->
+<div class="w3-bottom w3-hide-small">
+  <div class="w3-bar w3-white w3-center w3-padding w3-opacity-min w3-hover-opacity-off">
+    <a href="/" style="width:25%" class="w3-bar-item w3-button">Home</a>
+    <a href="#us" style="width:25%" class="w3-bar-item w3-button">{{event.names}}</a>
+    <a href="#event" style="width:25%" class="w3-bar-item w3-button">Event</a>
+    <a href="#rsvp" style="width:25%" class="w3-bar-item w3-button w3-hover-black">RSVP</a>
+  </div>
+</div><!-- Navbar (sticky bottom)
+ <div class="w3-top">
+  <div class="w3-bar w3-pale-blue w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-pale-blue" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    {% if user.is_authenticated %}
+      <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Profile</a>
+    {% else %}
+      <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Login</a>
+      <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Register</a>
+    {% endif %}
+  </div>
+-->
+<!-- About / Jane And John -->
+<div class="w3-container w3-padding-64 w3-pale-blue w3-grayscale-min" id="us">
+  <div class="w3-content">
+    <h1 class="w3-center w3-text-grey"><b>{{ event.names }}</b></h1>
+    <img class="w3-round w3-grayscale-min" src="{{event.picture_url.url}}" style="width:100%;margin:32px 0">
+    <p><i>{{event.our_story}}</i>
+    </p><br>
+    <p class="w3-center"><a href="#event" class="w3-button w3-black w3-round w3-padding-large w3-large">Event Details</a></p>
+  </div>
+</div>
+
+<!-- Background photo -->
+<div class="w3-display-container bgimg2">
+  <div class="w3-display-middle w3-text-white w3-center">
+    <h1 class="w3-jumbo">You Are Invited</h1><br>
+    <h2>Of course..</h2>
+  </div>
+</div>
+
+<!-- Wedding information -->
+<div class="w3-container w3-padding-64 w3-pale-blue w3-grayscale-min w3-center" id="event">
+  <div class="w3-content">
+    <h1 class="w3-text-grey"><b>EVENT</b></h1>
+    <img class="w3-round-large w3-grayscale-min" src="{% static 'img/event-location.jpg'%}" style="width:100%;margin:64px 0">
+    <div class="w3-row">
+      <div class="w3-half">
+        <h2>When</h2>
+        <p>Event - {{ event.when }}</p>
+      </div>
+      <div class="w3-half">
+        <h2>Where</h2>
+        <p>{{event.where}}</p>
+      </div>
     </div>
   </div>
+</div>
 
-  <div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
-    <h3 align="center"> Note: You are not authenticated. Please login and return to this page. </h3>
-  </div>
-  <footer class="w3-container w3-padding-64 w3-center w3-opacity">
-   <div id="google_translate_element"></div>
-   <p>Powered by theDay Team</p>
-  </footer>
+<!-- RSVP section -->
+<div class="w3-container w3-padding-64 w3-pale-blue w3-center w3-wide" id="rsvp">
+  <h1>HOPE YOU CAN MAKE IT!</h1>
+  <p class="w3-xlarge">
+    <a class="w3-button w3-round w3-blue w3-opacity w3-hover-opacity-off" href="/login" style="padding:8px 60px">LOGIN</a>
+    <a class="w3-button w3-round w3-blue w3-opacity w3-hover-opacity-off" href="/register" style="padding:8px 60px">REGISTER</a>
+  </p>
+</div>
 
-  <script type="text/javascript">
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-  }
-  </script>
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-16">
+  <div id="google_translate_element"></div>
+  <p>Powered by theDay Team </p>
+</footer>
+<div class="w3-hide-small" style="margin-bottom:32px"> </div>
 
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+}
+</script>
 
-  <script>
-  // Used to toggle the menu on small screens when clicking on the menu button
-  function myFunction() {
-    var x = document.getElementById("navDemo");
-    if (x.className.indexOf("w3-show") == -1) {
-      x.className += " w3-show";
-    } else {
-      x.className = x.className.replace(" w3-show", "");
-    }
-  }
-  </script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-  </body>
+</body>
 </html>

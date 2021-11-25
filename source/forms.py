@@ -13,7 +13,6 @@ class UserEditForm(forms.ModelForm):
             'telegram_alias': TextInput(attrs={'id': 'telegram_alias', 'placeholder': 'telegram'}),
             'messenger_alias': TextInput(attrs={'id': 'messenger_alias', 'placeholder': 'messenger'}),
             'interests_description':  Textarea(attrs={'id': 'interests', 'placeholder': 'List some of your favourite topics..'}),
-            'picture_url': URLInput(attrs={'id': 'user_image',  'placeholder': 'https://sample-cover.jpg'}),
         }
 
 
@@ -29,7 +28,6 @@ class Create(forms.ModelForm):
             'when':  TimeInput(attrs={'type': 'time'}),
             'where': TextInput(attrs={'id': 'where', 'placeholder': 'e.g Kazan City Hall'}),
             'our_story': Textarea(attrs={'id': 'story', 'placeholder': 'Our story..'}),
-            'picture_url': URLInput(attrs={'id': 'user_image', 'placeholder': 'https://sample-cover.jpg'}),
         }
 
 class ImageForm(forms.ModelForm):

@@ -40,7 +40,6 @@
         <a href="/" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
         <a href="/my" class="w3-bar-item w3-button w3-padding-large w3-white">Profile</a>
         <a href="/new_event" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">New Event</a>
-        <a href="/edit" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Edit Profile</a>
         <a href="/logout" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Log Out</a>
       {% else %}
         <a href="/login" class="w3-bar-item w3-button w3-padding-large w3-white">Login</a>
@@ -54,7 +53,6 @@
         <a href="/" class="w3-bar-item w3-button w3-padding-large">Home</a>
         <a href="/my" class="w3-bar-item w3-button w3-padding-large">Profile</a>
         <a href="/new_event" class="w3-bar-item w3-button w3-padding-large">New Event</a>
-        <a href="/edit" class="w3-bar-item w3-button w3-padding-large">Edit Profile</a>
         <a href="/logout" class="w3-bar-item w3-button w3-padding-large">Log Out</a>
       {% else %}
         <a href="/login" class="w3-bar-item w3-button w3-padding-large">Login</a>
@@ -64,16 +62,12 @@
 
   </div>
 
-<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
-  <!-- The Grid -->
-  <div class="w3-row">
-    <!-- Left Column -->
-    <div class="w3-col w3-center w3-container m12 l12">
+    <div class="w3-center w3-container w3-margin-top">
       <!-- Profile -->
       <div class="w3-card w3-round w3-white">
         <div class="w3-container">
-         <h4 class="w3-center">My Profile</h4>
-         <p class="w3-center"> <img src="{{ user_inst.picture_url }}" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         <h4 class="w3-center">Profile</h4>
+         <p class="w3-center"> <img src="{{ user_inst.picture_url.url }}" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
          <hr>
          <h5> {{user.first_name}} {{user.last_name}} </h5>
          <p><a href = "https://www.facebook.com/{{ user_inst.messenger_alias }}"><i class="fa fa-facebook fa-fw w3-margin-right" style="color: #ff8080;"></i> {{ user_inst.messenger_alias }} </a></p>

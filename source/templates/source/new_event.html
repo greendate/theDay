@@ -47,7 +47,6 @@
       {% if user.is_authenticated %}
         <a href="/" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
         <a href="/my" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Profile</a>
-        <a href="/edit" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Edit Profile</a>
         <a href="/logout" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Log Out</a>
       {% else %}
         <a href="/login" class="w3-bar-item w3-button w3-padding-large w3-white">Login</a>
@@ -60,7 +59,6 @@
       {% if user.is_authenticated %}
         <a href="/" class="w3-bar-item w3-button w3-padding-large">Home</a>
         <a href="/my" class="w3-bar-item w3-button w3-padding-large">Profile</a>
-        <a href="/edit" class="w3-bar-item w3-button w3-padding-large">Edit Profile</a>
         <a href="/logout" class="w3-bar-item w3-button w3-padding-large">Log Out</a>
       {% else %}
         <a href="/login" class="w3-bar-item w3-button w3-padding-large">Login</a>
@@ -72,7 +70,7 @@
   <div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
     <div class="w3-row-padding w3-padding-16 w3-center">
       {% if user.is_authenticated %}
-        <form class="feedback-section" action="" method="post">
+        <form class="feedback-section" action="" enctype="multipart/form-data" method="post">
             {% csrf_token %}
             <h3> Create Event Form </h3>
             <p align="left"> Your Names: </p>

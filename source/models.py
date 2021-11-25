@@ -7,7 +7,7 @@ class UserInfo(models.Model):
     telegram_alias = models.CharField(max_length=30, default="unknown")
     messenger_alias = models.CharField(max_length=30, default="unknown")
     interests_description = models.TextField(default="Something about me..")
-    picture_url = models.URLField(max_length=120, default="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+    picture_url = models.ImageField(upload_to='source/static/images/', default="source/static/img/default-profile-icon-16.png")
 
 
 class Event(models.Model):
@@ -16,7 +16,7 @@ class Event(models.Model):
     our_story = models.TextField()
     when = models.TimeField()
     where = models.CharField(max_length=30)
-    picture_url = models.URLField(max_length=120)
+    picture_url = models.ImageField(upload_to='source/static/images/')
     organizer = models.ForeignKey(User, on_delete=models.CASCADE)
 
 

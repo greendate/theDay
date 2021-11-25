@@ -59,7 +59,7 @@
       {% endif %}
     </div>
   </div>
-
+  <!--
   <div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
     <div class="w3-row-padding w3-padding-16 w3-center">
       {% if user.is_authenticated %}
@@ -78,6 +78,40 @@
         {% endif %}
     </div>
   </div>
+  -->
+  {% if user.is_authenticated %}
+  <form class="feedback-section" action="" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <div class="w3-center w3-container w3-margin-top">
+      <!-- Profile -->
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+         <h4 class="w3-center">My Profile</h4>
+         <p class="w3-center"> <img src="{{ user_info.picture_url.url }}" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         <p> {{ form.picture_url }} </p>
+         <hr>
+         <h5> {{user.first_name}} {{user.last_name}} </h5>
+         <p><i class="fa fa-telegram fa-fw w3-margin-right" style="color: #ff8080;"></i> {{ form.telegram_alias }} </p>
+         <p><i class="fa fa-facebook fa-fw w3-margin-right" style="color: #ff8080;"></i> {{ form.messenger_alias }} </p>
+         <p><i class="fa fa-envelope fa-fw w3-margin-right" style="color: #ff8080;"></i> {{ user.email }}</p>
+        </div>
+      </div>
+      <br>
+
+      <!-- Interests -->
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+          <p>Interests</p>
+          <p>
+           {{ form.interests_description }}
+          </p>
+        </div>
+      </div>
+      <br>
+      <p align="center"> <input class="w3-button w3-black w3-padding-large w3-large w3-margin-top" type="submit" value="Save"> </p>
+     </div>
+    </form>
+    {% endif %}
 
   <footer class="w3-container w3-padding-64 w3-center w3-opacity">
    <div id="google_translate_element"></div>

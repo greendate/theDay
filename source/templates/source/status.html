@@ -47,7 +47,6 @@
       {% if user.is_authenticated %}
         <a href="/" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
         <a href="/my" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Profile</a>
-        <a href="/edit" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Edit Profile</a>
         <a href="/logout" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Log Out</a>
       {% else %}
         <a href="/login" class="w3-bar-item w3-button w3-padding-large w3-white">Login</a>
@@ -60,7 +59,6 @@
       {% if user.is_authenticated %}
         <a href="/" class="w3-bar-item w3-button w3-padding-large">Home</a>
         <a href="/my" class="w3-bar-item w3-button w3-padding-large">Profile</a>
-        <a href="/edit" class="w3-bar-item w3-button w3-padding-large">Edit Profile</a>
         <a href="/logout" class="w3-bar-item w3-button w3-padding-large">Log Out</a>
       {% else %}
         <a href="/login" class="w3-bar-item w3-button w3-padding-large">Login</a>
@@ -73,7 +71,7 @@
     <div class="w3-row-padding w3-padding-16">
       {% if user.is_authenticated %}
         <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-          <img src="{{organizer.picture_url}}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+          <img src="{{organizer.picture_url.url}}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
           <h4> {{ post.event.organizer.first_name }} {{ post.event.organizer.last_name }} </h4><br>
           <hr class="w3-clear">
           <p> {{ post.status_text }} </p>
@@ -95,7 +93,7 @@
         </div>
         {% for comment in comments %}
           <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-            <img src="{{comment.user.picture_url}}" alt="Avatar" class="w3-left w3-circle w3-margin-right w3-margin-bottom" style="width:60px">
+            <img src="{{comment.user.picture_url.url}}" alt="Avatar" class="w3-left w3-circle w3-margin-right w3-margin-bottom" style="width:60px">
             <p class="w3-margin-bottom"> {{ comment.comment }} </p>
           </div>
         {% endfor %}
